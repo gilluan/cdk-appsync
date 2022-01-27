@@ -1,0 +1,11 @@
+type User {
+     mobile: String!
+     firstName: String!
+     lastName: String!
+     username: String!
+     email: String!
+}
+
+type Query {
+     listUsers: [User]
+}
