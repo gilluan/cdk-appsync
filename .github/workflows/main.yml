@@ -21,6 +21,7 @@ jobs:
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
+          debug_log: true
           cdk_subcommand: 'diff'
           actions_comment: true
         env:
