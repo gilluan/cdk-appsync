@@ -37,11 +37,6 @@ export class CdkRandomuserGraphqlStack extends cdk.Stack {
       fieldName: "listUsers"
     });
 
-    // lambdaDs.createResolver({
-    //   typeName: "Mutation",
-    //   fieldName: "createUser"
-    // });
-
 
     // Prints out the AppSync GraphQL endpoint to the terminal
     new cdk.CfnOutput(this, "GraphQLAPIURL", {

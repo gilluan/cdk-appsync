@@ -1,20 +1,24 @@
 import listUsers from './listUsers';
-import User from './model/User';
+import UserFilterInput from './model/UserFilterInput'
 
 type AppSyncEvent = {
    info: {
      fieldName: string
   },
    arguments: {
-     userId: string,
-     user: User
+     page?: number,
+     results?: number,
+     filter?: UserFilterInput
   }
 }
 
 exports.handler = async (event:AppSyncEvent) => {
+
+    const { page, results, filter } = event.arguments
+
     switch (event.info.fieldName) {
         case "listUsers":
-            return await listUsers() as any;
+            return await listUsers(page, results, filter)
         default:
             return null;
     }

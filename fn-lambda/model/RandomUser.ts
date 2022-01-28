@@ -55,18 +55,18 @@ type Login = {
 }
 
 type RandomUser = {
-    gender: string;
+    gender?: string;
     name: UserName;
-    location: UserLocation
+    location?: UserLocation
     email: string;
-    login: Login;
-    dob: Dob;
-    registered: Registered;
-    phone: string;
+    login?: Login;
+    dob?: Dob;
+    registered?: Registered;
+    phone?: string;
     cell: string;
-    id: UserId;
-    picture: Picture;
-    nat: string;
+    id?: UserId;
+    picture?: Picture;
+    nat?: string;
 }
 
 

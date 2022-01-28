@@ -2,7 +2,7 @@ type User = {
     mobile: string;
     firstName: string;
     lastName: string;
-    username: string;
+    userName: string;
     email: string;
 }
 

@@ -2,10 +2,22 @@ type User {
      mobile: String!
      firstName: String!
      lastName: String!
-     username: String!
+     userName: String!
      email: String!
 }
 
+
+input UserName {
+     title: String
+     first: String
+     last: String
+}
+input UserFilterInput {
+     name: UserName
+     lastName: String
+     email: String
+}
+
 type Query {
-     listUsers: [User]
+     listUsers(page: Int, results: Int, filter: UserFilterInput): [User]
 }

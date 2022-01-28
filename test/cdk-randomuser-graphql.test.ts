@@ -1,17 +1,41 @@
-// import { Template } from '@aws-cdk/assertions';
-// import * as cdk from '@aws-cdk/core';
-// import * as CdkRandomuserGraphql from '../lib/cdk-randomuser-graphql-stack';
+import { Template, Match } from '@aws-cdk/assertions';
+import * as cdk from '@aws-cdk/core';
 
-// example test. To run these tests, uncomment this file along with the
-// example resource in lib/cdk-randomuser-graphql-stack.ts
-test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new CdkRandomuserGraphql.CdkRandomuserGraphqlStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
+import * as CdkRandomuserGraphql from '../lib/cdk-randomuser-graphql-stack';
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
+test('Stack contains GraphQLApi', () => {
+    const app = new cdk.App();
+
+    const stack = new CdkRandomuserGraphql.CdkRandomuserGraphqlStack(app, 'MyTestStack');
+
+    const template = Template.fromStack(stack)
+
+    template.hasResourceProperties('AWS::AppSync::GraphQLApi', {
+        Name: "cdk-notes-appsync-api"
+    })
+
+});
+
+
+test('Stack contains GraphQLSchema', () => {
+    const app = new cdk.App();
+
+    const stack = new CdkRandomuserGraphql.CdkRandomuserGraphqlStack(app, 'MyTestStack');
+
+    const template = Template.fromStack(stack)
+
+    template.hasResourceProperties('AWS::AppSync::GraphQLSchema', {})
+
+});
+
+
+test('Stack contains ApiKey', () => {
+    const app = new cdk.App();
+
+    const stack = new CdkRandomuserGraphql.CdkRandomuserGraphqlStack(app, 'MyTestStack');
+
+    const template = Template.fromStack(stack)
+
+    template.hasResourceProperties('AWS::AppSync::ApiKey', {})
+
 });

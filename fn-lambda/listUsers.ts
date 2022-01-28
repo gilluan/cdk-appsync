@@ -1,48 +1,49 @@
-const fetch = require('node-fetch')
-import User from './model/User'
+import UserFilterInput from './model/UserFilterInput'
 import RandomUser from './model/RandomUser'
+import User from './model/User'
+import ResultRandomUser from './model/ResultRandomUser'
+
+import {
+    request,
+    filterEqualsObjects,
+    mapListRandomUserToListUser
+}  from './utils/userUtils'
 
 
-type ResultRandomUser = {
-  results: RandomUser[];
-  info: {
-      seed: String;
-      results: number;
-      page: number;
-      version: string
-  }
-}
 
-async function request<R>(
-    url: string,
-    config?:any
-): Promise<R> {
-    const request = await fetch(url, config)
-    return await request.json()
-}
+const listUsers = async (page = 0, results = 100, filter?: UserFilterInput): Promise<User[]> => {
 
-const mapRandomUserToUser = (randomUser: RandomUser): User => ({
-   email: randomUser.email,
-    firstName: randomUser.name.first,
-    lastName: randomUser.name.last,
-    mobile: randomUser.cell,
-    username: randomUser.name.title
-})
+    //Should be replaced by environment variable in the future
+    const URL_RANDOM_USER = `https://randomuser.me/api/?page=${page}&results=${results}&seed=foobar`
 
-const mapListRandomUserToListUser = (listRandomUsers: RandomUser[]): User[] => {
-    return listRandomUsers.map(ru => mapRandomUserToUser(ru))
-}
-
-async function listUsers() {
-    //const params = {}
     try {
-        const users = await request<ResultRandomUser>("https://randomuser.me/api/?results=2")
-        console.log(users)
-        return mapListRandomUserToListUser(users.results)
+
+        const users = await request<ResultRandomUser>(URL_RANDOM_USER)
+
+        let randomUsers: RandomUser[] = users.results
+
+        if(filter && filter.name) {
+            randomUsers = [...filterEqualsObjects(randomUsers, filter.name, "name")]
+        }
+
+        if (filter && filter.lastName) {
+            randomUsers = [...randomUsers.filter((user: RandomUser) => user.name.last === filter.lastName)]
+        }
+
+        if(filter && filter.email) {
+            randomUsers = [...randomUsers.filter((user: RandomUser) => user.email === filter.email)]
+        }
+
+        return mapListRandomUserToListUser(randomUsers)
+
     } catch (err) {
+
         console.log('error: ', err)
-        return null
+
+        return []
+
     }
+
 }
 
-export default listUsers;
+export default  listUsers;
