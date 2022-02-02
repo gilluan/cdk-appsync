@@ -43,14 +43,14 @@ export class CdkRandomuserGraphqlStack extends cdk.Stack {
       value: api.graphqlUrl
     });
 
-    // Prints out the AppSync GraphQL API key to the terminal
-    new cdk.CfnOutput(this, "GraphQLAPIKey", {
-      value: api.apiKey || ''
-    });
+//     // Prints out the AppSync GraphQL API key to the terminal
+//     new cdk.CfnOutput(this, "GraphQLAPIKey", {
+//       value: api.apiKey || ''
+//     });
 
     // Prints out the stack region to the terminal
-    new cdk.CfnOutput(this, "Stack Region", {
-      value: this.region
-    });
+//     new cdk.CfnOutput(this, "Stack Region", {
+//       value: this.region
+//     });
   }
 }
